@@ -1,0 +1,44 @@
+server:
+  port: 8087
+
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: BOOK-SERVICE
+          uri: lb://BOOK-SERVICE
+          predicates:
+            - Path=/books/**
+
+        - id: BORROWER-SERVICE
+          uri: lb://BORROWER-SERVICE
+          predicates:
+            - Path=/borrowers/**
+
+        - id: BORROWRECORD-SERVICE
+          uri: lb://BORROWRECORD-SERVICE
+          predicates:
+            - Path=/borrowrecords/**
+
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/**
+
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    hostname: localhost
+
+
+
